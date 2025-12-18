@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Inter, DM_Serif_Display, JetBrains_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
+import { ScrollToTop } from "@/components/scroll-to-top"
 import "./globals.css"
 
 const inter = Inter({
@@ -54,6 +55,7 @@ export default function RootLayout({
     <html lang="id" className="scroll-smooth">
       <body className={`${inter.variable} ${dmSerif.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
         {children}
+        <ScrollToTop />
         <Analytics />
       </body>
     </html>
