@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   title: "NusaRaksa Island - Platform Edukasi Budaya & Pariwisata Pulau Kangean",
   description:
     "Platform digital pelestarian budaya dan pariwisata berkelanjutan Pulau Kangean. Jelajahi bahasa, tradisi, dan keindahan alam Kepulauan Kangean.",
-  generator: "v0.app",
+  generator: "avezoor",
   keywords: ["Kangean", "Pariwisata", "Budaya", "Bahasa Kangean", "Wisata Bahari", "Kepulauan Kangean"],
   icons: {
     icon: [

@@ -1,34 +1,28 @@
 "use client"
 
 import { useRef } from "react"
+import Link from "next/link"
 import { motion, useInView } from "framer-motion"
-import { Newspaper } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
+import { ChevronRight } from "lucide-react"
 
 export function BlogHeader() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true })
 
   return (
-    <section className="pt-32 pb-16 bg-gradient-to-b from-primary/5 to-background" ref={ref}>
+    <section className="pt-20 pb-12 bg-foreground text-background border-b border-border" ref={ref}>
       <div className="container mx-auto px-4">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="max-w-3xl mx-auto text-center"
+          transition={{ duration: 0.6 }}
+          className="flex items-center gap-2 text-sm"
         >
-          <Badge variant="secondary" className="mb-4 px-4 py-1.5">
-            <Newspaper className="w-4 h-4 mr-1.5" />
-            Blog NusaRaksa
-          </Badge>
-          <h1 className="font-serif text-4xl md:text-6xl font-normal text-black mb-6 text-balance">
-            Cerita dari Kangean
-          </h1>
-          <p className="text-gray-700 text-lg leading-relaxed font-light">
-            Temukan artikel menarik seputar wisata, budaya, kuliner, dan kekayaan alam Kepulauan Kangean yang ditulis
-            oleh warga lokal dan pecinta budaya.
-          </p>
+          <Link href="/" className="text-background/70 hover:text-background transition-colors">
+            Beranda
+          </Link>
+          <ChevronRight className="w-4 h-4 text-background/70" />
+          <span className="text-background font-medium">Blog</span>
         </motion.div>
       </div>
     </section>
