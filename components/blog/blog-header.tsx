@@ -18,10 +18,10 @@ export function BlogHeader() {
           transition={{ duration: 0.6 }}
           className="flex items-center gap-2 text-sm"
         >
-          <Link href="/" className="text-background/70 hover:text-background transition-colors">
+          <Link href="/" className="text-background">
             Beranda
           </Link>
-          <ChevronRight className="w-4 h-4 text-background/70" />
+          <ChevronRight className="w-4 h-4 text-background" />
           <span className="text-background font-medium">Blog</span>
         </motion.div>
       </div>
