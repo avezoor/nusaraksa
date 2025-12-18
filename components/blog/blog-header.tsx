@@ -22,10 +22,10 @@ export function BlogHeader() {
             <Newspaper className="w-4 h-4 mr-1.5" />
             Blog NusaRaksa
           </Badge>
-          <h1 className="font-serif text-4xl md:text-6xl font-normal text-foreground mb-6 text-balance">
+          <h1 className="font-serif text-4xl md:text-6xl font-normal text-black mb-6 text-balance">
             Cerita dari Kangean
           </h1>
-          <p className="text-muted-foreground text-lg leading-relaxed font-light">
+          <p className="text-gray-700 text-lg leading-relaxed font-light">
             Temukan artikel menarik seputar wisata, budaya, kuliner, dan kekayaan alam Kepulauan Kangean yang ditulis
             oleh warga lokal dan pecinta budaya.
           </p>
