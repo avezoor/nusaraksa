@@ -62,7 +62,7 @@ export function LanguageArchive() {
   }, [selectedCategory, searchQuery])
 
   return (
-    <section id="bahasa" className="py-16 sm:py-20 md:py-24 lg:py-32 bg-muted/30" ref={ref}>
+    <section id="bahasa" className="py-8 sm:py-10 md:py-12 lg:py-16 bg-muted/30" ref={ref}>
       <div className="container mx-auto px-4">
         {/* Section Header - Better responsive text */}
         <motion.div

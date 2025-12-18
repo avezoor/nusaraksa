@@ -38,7 +38,7 @@ export function QRCodeSection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
   return (
-    <section id="qr" className="py-16 sm:py-20 md:py-24 lg:py-32 bg-background overflow-hidden" ref={ref}>
+    <section id="qr" className="py-8 sm:py-10 md:py-12 lg:py-16 bg-background overflow-hidden" ref={ref}>
       <div className="container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-16 xl:gap-20 items-center">
           {/* Left Content */}

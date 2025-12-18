@@ -99,7 +99,7 @@ export function CultureCenter() {
   })
 
   return (
-    <section id="budaya" className="py-16 sm:py-20 md:py-24 lg:py-32 bg-background" ref={ref}>
+    <section id="budaya" className="py-8 sm:py-10 md:py-12 lg:py-16 bg-background" ref={ref}>
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <motion.div
