@@ -10,7 +10,7 @@ export function BlogHeader() {
   const isInView = useInView(ref, { once: true })
 
   return (
-    <section className="pt-20 pb-12 bg-foreground text-background border-b border-border" ref={ref}>
+    <section className="pt-20 pb-12 bg-black text-white border-b border-border" ref={ref}>
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -18,11 +18,11 @@ export function BlogHeader() {
           transition={{ duration: 0.6 }}
           className="flex items-center gap-2 text-sm"
         >
-          <Link href="/" className="text-background">
+          <Link href="/" className="text-white">
             Beranda
           </Link>
-          <ChevronRight className="w-4 h-4 text-background" />
-          <span className="text-background font-medium">Blog</span>
+          <ChevronRight className="w-4 h-4 text-white" />
+          <span className="text-white font-medium">Blog</span>
         </motion.div>
       </div>
     </section>
