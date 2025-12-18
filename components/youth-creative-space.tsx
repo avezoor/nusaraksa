@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react"
 import Image from "next/image"
-import { Users, Camera, FileText, ShoppingBag, Play, Heart, MessageCircle, ExternalLink, Search } from "lucide-react"
+import { Users, Camera, FileText, ShoppingBag, Play, Heart, ExternalLink, Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -285,10 +285,6 @@ export function YouthCreativeSpace() {
                               <Heart className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                               {item.likes}
                             </span>
-                            <span className="flex items-center gap-1 sm:gap-1.5">
-                              <MessageCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                              {item.comments}
-                            </span>
                           </div>
                         </CardContent>
                       </Card>
@@ -424,10 +420,6 @@ export function YouthCreativeSpace() {
                       <span className="flex items-center gap-1.5 sm:gap-2">
                         <Heart className="w-4 h-4 sm:w-5 sm:h-5" />
                         {selectedGalleryItem.likes} suka
-                      </span>
-                      <span className="flex items-center gap-1.5 sm:gap-2">
-                        <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5" />
-                        {selectedGalleryItem.comments} komentar
                       </span>
                     </div>
                   </motion.div>
