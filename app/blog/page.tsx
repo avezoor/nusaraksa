@@ -1,6 +1,6 @@
 import { Suspense } from "react"
 import { BlogList } from "@/components/blog/blog-list"
-import { Navbar } from "@/components/navbar"
+import { BlogHeader } from "@/components/blog/blog-header"
 import { Footer } from "@/components/footer"
 
 export const metadata = {
@@ -11,7 +11,7 @@ export const metadata = {
 export default function BlogPage() {
   return (
     <main className="min-h-screen bg-background">
-      <Navbar />
+      <BlogHeader />
       <Suspense fallback={<div className="py-20 text-center">Memuat artikel...</div>}>
         <BlogList />
       </Suspense>

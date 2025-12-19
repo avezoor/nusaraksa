@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
 import { blogPosts } from "@/config/blog-data"
 import { BlogDetail } from "@/components/blog/blog-detail"
-import { Navbar } from "@/components/navbar"
+import { BlogHeader } from "@/components/blog/blog-header"
 import { Footer } from "@/components/footer"
 
 interface BlogPostPageProps {
@@ -38,7 +38,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <main className="min-h-screen bg-background">
-      <Navbar />
+      <BlogHeader />
       <BlogDetail post={post} />
       <Footer />
     </main>
