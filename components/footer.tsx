@@ -2,7 +2,8 @@
 
 import { useRef } from "react"
 import Link from "next/link"
-import { Waves, MapPin, Phone, Mail, Facebook, Instagram, Youtube, Twitter, ArrowRight } from "lucide-react"
+import Image from "next/image"
+import { MapPin, Phone, Mail, Facebook, Instagram, Youtube, Twitter, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { motion, useInView } from "framer-motion"
@@ -86,9 +87,9 @@ export function Footer() {
               <motion.div
                 whileHover={{ rotate: 360 }}
                 transition={{ duration: 0.6 }}
-                className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-primary flex items-center justify-center"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden flex items-center justify-center"
               >
-                <Waves className="w-4 h-4 sm:w-5 sm:h-5 text-primary-foreground" />
+                <Image src="/icon-dark-32x32.png" alt="NusaRaksa Logo" width={32} height={32} priority />
               </motion.div>
               <span className="font-serif text-lg sm:text-xl font-normal">NusaRaksa Island</span>
             </Link>

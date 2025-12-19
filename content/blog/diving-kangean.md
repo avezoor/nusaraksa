@@ -2,6 +2,7 @@
 id: "5"
 slug: diving-kangean
 title: Surga Diving di Perairan Kangean
+description: Eksplorasi bawah laut Kangean dengan terumbu karang yang masih perawan dan biodiversitas tinggi.
 excerpt: Eksplorasi bawah laut Kangean dengan terumbu karang yang masih perawan dan biodiversitas tinggi.
 author: Rizki Pratama
 authorImage: rizkiPratama

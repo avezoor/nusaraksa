@@ -4,11 +4,16 @@ import { useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { motion, useInView } from "framer-motion"
-import { ArrowLeft, Calendar, Clock, Tag, Waves } from "lucide-react"
+import { ArrowLeft, Calendar, Clock, Tag } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import type { BlogPost } from "@/config/blog-data"
+import type { BlogPost } from "@/lib/blog-types"
 import ReactMarkdown from "react-markdown"
+import remarkMath from "remark-math"
+import remarkGfm from "remark-gfm"
+import rehypeKatex from "rehype-katex"
+import rehypeRaw from "rehype-raw"
+import "katex/dist/katex.min.css"
 
 interface BlogDetailProps {
   post: BlogPost
@@ -49,11 +54,11 @@ export function BlogDetail({ post }: BlogDetailProps) {
             {post.title}
           </h1>
 
-          {/* Meta Info - replaced author image with web logo icon */}
+          {/* Meta Info - author image */}
           <div className="flex flex-wrap items-center gap-4 sm:gap-6 mb-8 text-muted-foreground">
             <div className="flex items-center gap-3">
               <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden bg-primary/10 flex items-center justify-center">
-                <Waves className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+                <Image src={post.authorImage || "/icon-dark-32x32.png"} alt={post.author} fill className="object-cover" />
               </div>
               <div>
                 <p className="font-medium text-foreground text-sm sm:text-base">{post.author}</p>
@@ -86,7 +91,7 @@ export function BlogDetail({ post }: BlogDetailProps) {
             <Image src={post.image || "/placeholder.svg"} alt={post.title} fill className="object-cover" priority />
           </motion.div>
 
-          {/* Content */}
+          {/* Content with Markdown, Tables, and MathJax Support */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -101,9 +106,40 @@ export function BlogDetail({ post }: BlogDetailProps) {
               prose-code:bg-muted prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-xs sm:prose-code:text-sm
               prose-ul:text-muted-foreground prose-ol:text-muted-foreground
               prose-li:marker:text-primary
-              prose-table:border prose-th:bg-muted prose-th:p-2 sm:prose-th:p-3 prose-td:p-2 sm:prose-td:p-3 prose-td:border"
+              prose-table:border prose-table:border-border prose-th:bg-muted prose-th:border-border prose-th:p-2 sm:prose-th:p-3 prose-th:text-foreground prose-td:p-2 sm:prose-td:p-3 prose-td:border-border prose-td:text-muted-foreground
+              prose-img:rounded-lg prose-img:my-4 sm:prose-img:my-6
+              [&_.math-inline]:mx-1 [&_.math-block]:my-4 [&_.math-block]:overflow-x-auto
+              [&_table]:w-full [&_table]:table-auto [&_thead]:bg-muted [&_tbody>tr:nth-child(odd)]:bg-muted/30"
           >
-            <ReactMarkdown>{post.content}</ReactMarkdown>
+            <ReactMarkdown
+              remarkPlugins={[remarkMath, remarkGfm]}
+              rehypePlugins={[rehypeKatex, rehypeRaw]}
+              components={{
+                p: ({ node, ...props }) => <p {...props} className="break-words" />,
+                img: ({ node, ...props }) => (
+                  <img {...props} className="max-w-full h-auto rounded-lg" />
+                ),
+                table: ({ node, ...props }) => (
+                  <div className="overflow-x-auto w-full my-4">
+                    <table {...props} className="w-full border-collapse border border-border" />
+                  </div>
+                ),
+                thead: ({ node, ...props }) => (
+                  <thead {...props} className="bg-muted border-b border-border" />
+                ),
+                th: ({ node, ...props }) => (
+                  <th {...props} className="border border-border p-2 sm:p-3 text-left text-foreground font-semibold" />
+                ),
+                td: ({ node, ...props }) => (
+                  <td {...props} className="border border-border p-2 sm:p-3 text-muted-foreground" />
+                ),
+                tr: ({ node, ...props }) => (
+                  <tr {...props} className="hover:bg-muted/50 transition-colors" />
+                ),
+              }}
+            >
+              {post.content}
+            </ReactMarkdown>
           </motion.div>
 
           {/* Tags */}

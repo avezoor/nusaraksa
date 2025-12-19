@@ -2,6 +2,7 @@
 id: "4"
 slug: kerajinan-anyaman-kangean
 title: "Kerajinan Anyaman Kangean: Warisan yang Hampir Punah"
+description: Upaya pelestarian kerajinan anyaman tradisional dari serat alam yang menjadi identitas Kangean.
 excerpt: Upaya pelestarian kerajinan anyaman tradisional dari serat alam yang menjadi identitas Kangean.
 author: Dewi Lestari
 authorImage: dewiLestari

@@ -1,0 +1,32 @@
+{
+  "name": "NusaRaksa Island - Platform Edukasi Budaya & Pariwisata Pulau Kangean",
+  "short_name": "NusaRaksa",
+  "description": "Platform digital pelestarian budaya dan pariwisata berkelanjutan Pulau Kangean",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0f766e",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-dark-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["education", "travel"],
+  "screenshots": [
+    {
+      "src": "/placeholder.svg",
+      "sizes": "540x720",
+      "type": "image/svg+xml",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/placeholder.svg",
+      "sizes": "1280x720",
+      "type": "image/svg+xml",
+      "form_factor": "wide"
+    }
+  ]
+}

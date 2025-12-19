@@ -2,36 +2,12 @@
 
 import { useRef } from "react"
 import Image from "next/image"
-import { QrCode, Smartphone, MapPin, Book, Camera, CheckCircle2 } from "lucide-react"
+import { QrCode, Smartphone, CheckCircle2 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { motion, useInView } from "framer-motion"
-import { images } from "@/config/images"
-
-const qrFeatures = [
-  {
-    icon: Book,
-    title: "Sejarah & Budaya",
-    description: "Penjelasan lengkap tentang sejarah dan makna budaya lokasi",
-  },
-  {
-    icon: MapPin,
-    title: "Cerita Lokal",
-    description: "Cerita rakyat dan legenda yang berkaitan dengan tempat tersebut",
-  },
-  {
-    icon: Camera,
-    title: "Dokumentasi Visual",
-    description: "Foto dan video dokumentasi singkat dari lokasi",
-  },
-]
-
-const qrLocations = [
-  { name: "Pantai Tanjung Kiras", type: "Wisata Bahari" },
-  { name: "Kampung Adat Palasa", type: "Kampung Budaya" },
-  { name: "Pelabuhan Tradisional", type: "Spot Sejarah" },
-  { name: "Bukit Cinta", type: "Spot Alam" },
-]
+import { qrFeatures, qrLocations, qrCodes } from "@/config/qr-data"
+import { logoIconMap } from "@/config/logo"
 
 export function QRCodeSection() {
   const ref = useRef(null)
@@ -61,23 +37,26 @@ export function QRCodeSection() {
 
             {/* Features */}
             <div className="space-y-4 sm:space-y-5 md:space-y-6 mb-6 sm:mb-8 md:mb-10">
-              {qrFeatures.map((feature, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ delay: 0.3 + index * 0.1, duration: 0.5 }}
-                  className="flex gap-3 sm:gap-4 group"
-                >
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors duration-300">
-                    <feature.icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-foreground mb-0.5 sm:mb-1 text-sm sm:text-base">{feature.title}</h3>
-                    <p className="text-xs sm:text-sm text-muted-foreground font-light">{feature.description}</p>
-                  </div>
-                </motion.div>
-              ))}
+              {qrFeatures.map((feature, index) => {
+                const Icon = logoIconMap[feature.icon as keyof typeof logoIconMap]
+                return (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={isInView ? { opacity: 1, x: 0 } : {}}
+                    transition={{ delay: 0.3 + index * 0.1, duration: 0.5 }}
+                    className="flex gap-3 sm:gap-4 group"
+                  >
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors duration-300">
+                      {Icon && <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />}
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-foreground mb-0.5 sm:mb-1 text-sm sm:text-base">{feature.title}</h3>
+                      <p className="text-xs sm:text-sm text-muted-foreground font-light">{feature.description}</p>
+                    </div>
+                  </motion.div>
+                )
+              })}
             </div>
 
             {/* How to Use */}
@@ -192,13 +171,13 @@ export function QRCodeSection() {
                 initial={{ opacity: 0, scale: 0.8, x: -20 }}
                 animate={isInView ? { opacity: 1, scale: 1, x: 0 } : {}}
                 transition={{ delay: 0.9, type: "spring" }}
-                className="absolute -left-4 sm:-left-8 md:-left-12 top-1/4 bg-card rounded-xl sm:rounded-2xl p-2.5 sm:p-3 md:p-4 shadow-xl border border-border max-w-[100px] sm:max-w-[120px] md:max-w-[140px] hidden sm:block"
+                className="absolute -left-4 sm:-left-8 md:-left-12 top-1/12 bg-card rounded-xl sm:rounded-2xl p-2.5 sm:p-3 md:p-4 shadow-xl border border-border max-w-[160px] sm:max-w-[200px] md:max-w-[240px]"
               >
                 <Image
-                  src={images.qr.mockup || "/placeholder.svg"}
+                  src={qrCodes[0]?.image || "/placeholder.svg?height=100&width=100"}
                   alt="QR Code"
-                  width={100}
-                  height={100}
+                  width={200}
+                  height={200}
                   className="rounded-lg sm:rounded-xl w-full h-auto"
                 />
                 <p className="text-[10px] sm:text-xs text-center mt-2 sm:mt-3 text-muted-foreground font-light">
@@ -211,7 +190,7 @@ export function QRCodeSection() {
                 initial={{ opacity: 0, scale: 0.8, x: 20 }}
                 animate={isInView ? { opacity: 1, scale: 1, x: 0 } : {}}
                 transition={{ delay: 1, type: "spring" }}
-                className="absolute -right-2 sm:-right-4 md:-right-8 bottom-1/4 bg-card rounded-xl sm:rounded-2xl p-2.5 sm:p-3 md:p-4 shadow-xl border border-border hidden sm:block"
+                className="absolute -right-2 sm:-right-4 md:-right-8 bottom-1/4 bg-card rounded-xl sm:rounded-2xl p-2.5 sm:p-3 md:p-4 shadow-xl border border-border"
               >
                 <h4 className="text-[10px] sm:text-xs font-medium text-foreground mb-2 sm:mb-3">Lokasi QR Code</h4>
                 <ul className="space-y-1.5 sm:space-y-2">

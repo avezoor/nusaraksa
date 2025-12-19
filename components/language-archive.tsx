@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { motion, useInView, AnimatePresence } from "framer-motion"
 import { vocabularyCategories, shuffleWords, type VocabularyWord } from "@/config/vocabulary-data"
+import { logoIconMap } from "@/config/logo"
 
 const WORDS_PER_PAGE = 9
 
@@ -110,18 +111,22 @@ export function LanguageArchive() {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3 }}
+            className="flex justify-center"
           >
-            <TabsList className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 h-auto bg-transparent mb-8 sm:mb-10">
-              {vocabularyCategories.map((category) => (
-                <TabsTrigger
-                  key={category.id}
-                  value={category.id}
-                  className="flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-3 sm:py-4 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground bg-card border border-border rounded-lg sm:rounded-xl transition-all duration-300 hover:border-primary/50 text-xs sm:text-sm"
-                >
-                  <span className="text-base sm:text-xl">{category.icon}</span>
-                  <span className="font-medium truncate">{category.name}</span>
-                </TabsTrigger>
-              ))}
+            <TabsList className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 h-auto bg-transparent mb-8 sm:mb-10 w-fit">
+              {vocabularyCategories.map((category) => {
+                const Icon = logoIconMap[category.icon as keyof typeof logoIconMap]
+                return (
+                  <TabsTrigger
+                    key={category.id}
+                    value={category.id}
+                    className="flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-3 sm:py-4 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground bg-card border border-border rounded-lg sm:rounded-xl transition-all duration-300 hover:border-primary/50 text-xs sm:text-sm"
+                  >
+                    {Icon && <Icon className="w-4 h-4 sm:w-5 sm:h-5" />}
+                    <span className="font-medium truncate">{category.name}</span>
+                  </TabsTrigger>
+                )
+              })}
             </TabsList>
           </motion.div>
 

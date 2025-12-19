@@ -3,7 +3,8 @@
 import { Button } from "@/components/ui/button"
 import { MapPin, BookOpen, Users, ArrowDown, Sparkles } from "lucide-react"
 import { motion } from "framer-motion"
-import { images } from "@/config/images"
+
+const HERO_BACKGROUND = "/placeholder.svg?height=1080&width=1920"
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -27,13 +28,13 @@ export function HeroSection() {
   return (
     <section
       id="beranda"
-      className="relative min-h-[100svh] flex items-center pt-14 sm:pt-16 md:pt-20 pb-8 overflow-hidden"
+      className="relative min-h-[100svh] flex items-center pt-14 sm:pt-16 md:pt-20 pb-8 sm:pb-12 md:pb-16 overflow-hidden"
     >
       {/* Background Image with Parallax Effect */}
       <div
         className="absolute inset-0 z-0"
         style={{
-          backgroundImage: `url('${images.hero.background}')`,
+          backgroundImage: `url('${HERO_BACKGROUND}')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -42,19 +43,25 @@ export function HeroSection() {
         <div className="absolute inset-0 bg-gradient-to-b from-foreground/60 via-foreground/40 to-foreground/70" />
 
         {/* Animated Wave Overlay */}
-        <div className="absolute bottom-0 left-0 right-0 h-20 sm:h-32 overflow-hidden">
-          <motion.div
-            initial={{ x: 0 }}
-            animate={{ x: "-50%" }}
-            transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-            className="absolute bottom-0 w-[200%] h-full opacity-20"
-            style={{
-              backgroundImage:
-                "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' d='M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E\")",
-              backgroundRepeat: "repeat-x",
-              backgroundSize: "50% 100%",
-            }}
-          />
+        <div className="absolute bottom-0 left-0 right-0 h-48 sm:h-64 md:h-80 overflow-hidden">
+          <motion.svg
+            animate={{ y: [0, -15, 0] }}
+            transition={{ duration: 2.5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+            className="w-full h-full opacity-30"
+            viewBox="0 0 1440 320"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+              fill="url(#gradient)"
+            />
+            <defs>
+              <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="currentColor" />
+                <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
+              </linearGradient>
+            </defs>
+          </motion.svg>
         </div>
       </div>
 
@@ -161,22 +168,6 @@ export function HeroSection() {
           </motion.div>
         </motion.div>
 
-        {/* Scroll Indicator - Hidden on very small screens */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.5 }}
-          className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 hidden sm:block"
-        >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}
-            className="flex flex-col items-center gap-2"
-          >
-            <span className="text-xs text-card/60 font-light tracking-widest uppercase">Scroll</span>
-            <ArrowDown className="w-5 h-5 text-card/60" />
-          </motion.div>
-        </motion.div>
       </div>
     </section>
   )

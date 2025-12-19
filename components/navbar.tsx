@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Menu, Waves } from "lucide-react"
+import Image from "next/image"
+import { Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { motion } from "framer-motion"
@@ -44,9 +45,9 @@ export function Navbar() {
             <motion.div
               whileHover={{ rotate: 360 }}
               transition={{ duration: 0.6 }}
-              className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-primary flex items-center justify-center"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden flex items-center justify-center"
             >
-              <Waves className="w-4 h-4 sm:w-5 sm:h-5 text-primary-foreground" />
+              <Image src="/icon-dark-32x32.png" alt="NusaRaksa Logo" width={32} height={32} priority />
             </motion.div>
             <span
               className={`font-serif text-lg sm:text-xl font-normal tracking-tight transition-colors duration-300 ${
@@ -110,8 +111,8 @@ export function Navbar() {
                 {/* Header */}
                 <div className="flex items-center justify-between p-4 border-b border-border">
                   <Link href="/" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
-                    <div className="w-8 h-8 rounded-xl bg-primary flex items-center justify-center">
-                      <Waves className="w-4 h-4 text-primary-foreground" />
+                    <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center">
+                      <Image src="/icon-dark-32x32.png" alt="NusaRaksa Logo" width={32} height={32} />
                     </div>
                     <span className="font-serif text-lg font-normal">NusaRaksa</span>
                   </Link>

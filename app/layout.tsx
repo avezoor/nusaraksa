@@ -27,22 +27,10 @@ export const metadata: Metadata = {
     "Platform digital pelestarian budaya dan pariwisata berkelanjutan Pulau Kangean. Jelajahi bahasa, tradisi, dan keindahan alam Kepulauan Kangean.",
   generator: "avezoor",
   keywords: ["Kangean", "Pariwisata", "Budaya", "Bahasa Kangean", "Wisata Bahari", "Kepulauan Kangean"],
+  manifest: "/manifest.json",
   icons: {
-    icon: [
-      {
-        url: "/icon-light-32x32.png",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/icon-dark-32x32.png",
-        media: "(prefers-color-scheme: dark)",
-      },
-      {
-        url: "/icon.svg",
-        type: "image/svg+xml",
-      },
-    ],
-    apple: "/apple-icon.png",
+    icon: "/icon-dark-32x32.png",
+    apple: "/icon-dark-32x32.png",
   },
 }
 

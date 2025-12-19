@@ -2,6 +2,7 @@
 id: "3"
 slug: kuliner-khas-kangean
 title: 5 Kuliner Khas Kangean yang Wajib Dicoba
+description: Petualangan rasa melalui hidangan laut segar dan masakan tradisional Kepulauan Kangean.
 excerpt: Petualangan rasa melalui hidangan laut segar dan masakan tradisional Kepulauan Kangean.
 author: Budi Santoso
 authorImage: budiSantoso

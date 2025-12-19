@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react"
 import Image from "next/image"
-import { Users, Camera, FileText, ShoppingBag, Play, Heart, ExternalLink, Search } from "lucide-react"
+import { Users, Camera, FileText, ShoppingBag, Play, Heart, ExternalLink, Search, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -11,128 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Input } from "@/components/ui/input"
 import { motion, useInView, AnimatePresence } from "framer-motion"
-import { images } from "@/config/images"
-
-const galleryItems = [
-  {
-    id: 1,
-    type: "photo",
-    title: "Sunset di Pantai Kangean",
-    author: "Ahmad Fauzi",
-    image: images.gallery.sunset,
-    likes: 234,
-    comments: 18,
-  },
-  {
-    id: 2,
-    type: "photo",
-    title: "Kehidupan Nelayan",
-    author: "Siti Aisyah",
-    image: images.gallery.nelayanLife,
-    likes: 189,
-    comments: 12,
-  },
-  {
-    id: 3,
-    type: "video",
-    title: "Tarian Tradisional Kangean",
-    author: "Muh. Rizki",
-    image: images.gallery.traditionalDance,
-    likes: 412,
-    comments: 45,
-  },
-  {
-    id: 4,
-    type: "photo",
-    title: "Pasar Pagi Kangean",
-    author: "Dewi Lestari",
-    image: images.gallery.pasarPagi,
-    likes: 156,
-    comments: 8,
-  },
-  {
-    id: 5,
-    type: "writing",
-    title: "Rindu Kampung Halaman",
-    author: "Fadila Nur",
-    image: images.gallery.writing,
-    likes: 298,
-    comments: 32,
-    excerpt: "Di setiap hembusan angin laut, aku menemukan aroma kampung yang telah lama kurindukan...",
-  },
-  {
-    id: 6,
-    type: "photo",
-    title: "Anak-anak Pesisir",
-    author: "Hasan Abdullah",
-    image: images.gallery.childrenPesisir,
-    likes: 367,
-    comments: 28,
-  },
-]
-
-const activities = [
-  {
-    id: 1,
-    title: "Festival Budaya Kangean 2024",
-    date: "15 Agustus 2024",
-    image: images.activities.festivalBudaya,
-    description: "Festival tahunan yang menampilkan seni dan budaya Kangean dengan berbagai pertunjukan tradisional.",
-  },
-  {
-    id: 2,
-    title: "Aksi Bersih Pantai",
-    date: "22 April 2024",
-    image: images.activities.bersihPantai,
-    description: "Kegiatan gotong royong membersihkan pantai yang diikuti oleh ratusan pemuda Kangean.",
-  },
-  {
-    id: 3,
-    title: "Workshop Anyaman Tradisional",
-    date: "10 Juni 2024",
-    image: images.activities.workshopAnyaman,
-    description: "Pelatihan kerajinan anyaman tradisional untuk melestarikan keterampilan lokal.",
-  },
-]
-
-const umkmProducts = [
-  {
-    id: 1,
-    name: "Kerupuk Ikan Kangean",
-    price: "Rp 25.000",
-    seller: "Bu Aminah",
-    image: images.umkm.kerupukIkan,
-    description: "Kerupuk ikan khas Kangean, dibuat dari ikan segar hasil tangkapan nelayan lokal.",
-    contact: "+62 812-3456-7890",
-  },
-  {
-    id: 2,
-    name: "Anyaman Tas Pandan",
-    price: "Rp 150.000",
-    seller: "Ibu Sari Craft",
-    image: images.umkm.tasPandan,
-    description: "Tas anyaman dari daun pandan, dibuat dengan teknik tradisional turun-temurun.",
-    contact: "+62 813-4567-8901",
-  },
-  {
-    id: 3,
-    name: "Terasi Kangean",
-    price: "Rp 35.000",
-    seller: "Pak Mahmud",
-    image: images.umkm.terasi,
-    description: "Terasi premium khas Kangean dengan cita rasa autentik dari udang segar.",
-    contact: "+62 815-6789-0123",
-  },
-  {
-    id: 4,
-    name: "Kerajinan Kerang",
-    price: "Rp 75.000",
-    seller: "Dewi Kerang Art",
-    image: images.umkm.kerajinanKerang,
-    description: "Hiasan dinding dari kerang laut yang dikumpulkan dan dirangkai dengan indah.",
-    contact: "+62 817-8901-2345",
-  },
-]
+import { galleryItems, activities, umkmProducts } from "@/config/creative-space-data"
 
 export function YouthCreativeSpace() {
   const [selectedGalleryItem, setSelectedGalleryItem] = useState<(typeof galleryItems)[0] | null>(null)
@@ -254,7 +133,7 @@ export function YouthCreativeSpace() {
                       >
                         <div className="relative aspect-[4/3] overflow-hidden">
                           <Image
-                            src={item.image || "/placeholder.svg"}
+                            src={item.media || "/placeholder.svg"}
                             alt={item.title}
                             fill
                             className="object-cover transition-transform duration-700 group-hover:scale-110"
@@ -396,12 +275,20 @@ export function YouthCreativeSpace() {
                     className="p-4 sm:p-6"
                   >
                     <div className="relative aspect-video overflow-hidden rounded-lg sm:rounded-xl mb-4 sm:mb-6">
-                      <Image
-                        src={selectedGalleryItem.image || "/placeholder.svg"}
-                        alt={selectedGalleryItem.title}
-                        fill
-                        className="object-cover"
-                      />
+                      {selectedGalleryItem.type === "video" ? (
+                        <video
+                          src={selectedGalleryItem.media || "/placeholder.mp4"}
+                          controls
+                          className="w-full h-full object-cover bg-black"
+                        />
+                      ) : (
+                        <Image
+                          src={selectedGalleryItem.media || "/placeholder.svg"}
+                          alt={selectedGalleryItem.title}
+                          fill
+                          className="object-cover"
+                        />
+                      )}
                     </div>
                     <DialogHeader>
                       <DialogTitle className="font-serif text-xl sm:text-2xl font-normal text-foreground">

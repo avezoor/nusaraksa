@@ -10,21 +10,37 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { shuffleArray, type BlogPost } from "@/lib/blog-types"
+import { getAllBlogPosts } from "@/lib/blog-server"
 
 const POSTS_PER_PAGE = 6
-const FALLBACK_POSTS: BlogPost[] = []
-const FALLBACK_CATEGORIES = ["Semua"]
 
-export function BlogList() {
+export function BlogListClient() {
   const [selectedCategory, setSelectedCategory] = useState("Semua")
   const [currentPage, setCurrentPage] = useState(1)
   const [shuffledPosts, setShuffledPosts] = useState<BlogPost[]>([])
   const [searchQuery, setSearchQuery] = useState("")
+  const [loading, setLoading] = useState(true)
+  const [blogCategories, setBlogCategories] = useState<string[]>([])
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true })
 
   useEffect(() => {
-    setShuffledPosts(shuffleArray(FALLBACK_POSTS))
+    const loadBlogPosts = async () => {
+      try {
+        const posts = await getAllBlogPosts()
+        setShuffledPosts(shuffleArray(posts))
+
+        // Extract unique categories
+        const categories = new Set(["Semua", ...posts.map((p) => p.category)])
+        setBlogCategories(Array.from(categories))
+        setLoading(false)
+      } catch (error) {
+        console.error("Error loading blog posts:", error)
+        setLoading(false)
+      }
+    }
+
+    loadBlogPosts()
   }, [])
 
   const filteredPosts = shuffledPosts.filter((post) => {
@@ -44,6 +60,16 @@ export function BlogList() {
   useEffect(() => {
     setCurrentPage(1)
   }, [selectedCategory, searchQuery])
+
+  if (loading) {
+    return (
+      <section className="py-16">
+        <div className="container mx-auto px-4 text-center">
+          <p className="text-muted-foreground">Memuat artikel...</p>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section className="py-16" ref={ref}>
@@ -73,7 +99,7 @@ export function BlogList() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-12"
         >
-          {FALLBACK_CATEGORIES.map((category) => (
+          {blogCategories.map((category) => (
             <Button
               key={category}
               variant={selectedCategory === category ? "default" : "outline"}

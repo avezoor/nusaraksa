@@ -2,6 +2,7 @@
 id: "1"
 slug: keindahan-pantai-kangean
 title: Keindahan Tersembunyi Pantai-Pantai Kangean
+description: Menjelajahi pesona pantai berpasir putih dan air jernih yang masih alami di Kepulauan Kangean.
 excerpt: Menjelajahi pesona pantai berpasir putih dan air jernih yang masih alami di Kepulauan Kangean.
 author: Ahmad Rifai
 authorImage: ahmadRifai

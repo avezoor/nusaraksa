@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react"
 import Image from "next/image"
-import { BookOpen, History, Anchor, ChevronRight, Search } from "lucide-react"
+import { ChevronRight, Search, BookOpen } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -10,77 +10,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Input } from "@/components/ui/input"
 import { motion, useInView, AnimatePresence } from "framer-motion"
-import { images } from "@/config/images"
-
-const culturalContent = [
-  {
-    id: 1,
-    category: "Cerita Rakyat",
-    icon: BookOpen,
-    title: "Legenda Putri Kangean",
-    description: "Kisah seorang putri yang menjaga keseimbangan laut dan daratan di Kepulauan Kangean.",
-    image: images.culture.legendaPutri,
-    fullContent:
-      "Dikisahkan pada zaman dahulu, terdapat seorang putri bernama Dewi Kangean yang hidup di sebuah kerajaan kecil di tengah lautan. Ia memiliki kemampuan untuk berkomunikasi dengan makhluk laut dan menjaga keseimbangan alam. Setiap tahun, ia melakukan ritual untuk memastikan hasil tangkapan nelayan melimpah dan cuaca mendukung pelayaran. Hingga kini, masyarakat Kangean masih mempercayai keberadaan roh putri yang menjaga pulau mereka.",
-  },
-  {
-    id: 2,
-    category: "Cerita Rakyat",
-    icon: BookOpen,
-    title: "Asal Usul Pulau Sepanjang",
-    description: "Legenda terbentuknya Pulau Sepanjang dari seekor naga laut yang tertidur.",
-    image: images.culture.pulauSepanjang,
-    fullContent:
-      "Konon, Pulau Sepanjang terbentuk dari seekor naga laut raksasa yang tertidur lelap setelah menjaga lautan dari badai besar. Tubuhnya yang membentang menjadi daratan panjang yang kini disebut Pulau Sepanjang. Para nelayan percaya bahwa naga tersebut masih hidup dan melindungi mereka dari bahaya laut. Ritual persembahan dilakukan setiap tahun sebagai bentuk penghormatan.",
-  },
-  {
-    id: 3,
-    category: "Sejarah Lokal",
-    icon: History,
-    title: "Kampung Nelayan Arjasa",
-    description: "Sejarah kampung nelayan tertua di Kangean yang menjadi pusat perdagangan hasil laut.",
-    image: images.culture.kampungArjasa,
-    fullContent:
-      "Kampung Arjasa merupakan salah satu pemukiman tertua di Kepulauan Kangean. Didirikan pada abad ke-17, kampung ini menjadi pusat perdagangan ikan dan hasil laut. Rumah-rumah panggung tradisional masih dapat ditemukan di sepanjang pesisir. Masyarakat Arjasa terkenal dengan teknik penangkapan ikan turun-temurun dan kerajinan anyaman jaring dari serat alami.",
-  },
-  {
-    id: 4,
-    category: "Sejarah Lokal",
-    icon: History,
-    title: "Pelabuhan Kuno Kalianget",
-    description: "Jejak pelabuhan kuno yang menjadi jalur perdagangan maritim Nusantara.",
-    image: images.culture.pelabuhanKalianget,
-    fullContent:
-      "Pelabuhan Kalianget pernah menjadi salah satu pelabuhan penting dalam jalur perdagangan maritim Nusantara. Pada masa kejayaannya, pelabuhan ini ramai dikunjungi pedagang dari berbagai daerah. Berbagai komoditas seperti garam, ikan kering, dan rempah-rempah diperdagangkan di sini. Sisa-sisa bangunan kolonial dan gudang tua masih dapat ditemukan di sekitar area pelabuhan.",
-  },
-  {
-    id: 5,
-    category: "Tradisi Laut",
-    icon: Anchor,
-    title: "Petik Laut Kangean",
-    description: "Ritual tahunan nelayan sebagai ungkapan syukur atas hasil laut yang melimpah.",
-    image: images.culture.petikLaut,
-    fullContent:
-      "Petik Laut adalah ritual tahunan yang dilakukan masyarakat Kangean sebagai bentuk syukur kepada Tuhan dan penghormatan kepada laut. Dalam ritual ini, sesaji berupa hasil bumi dan laut dihanyutkan ke tengah laut menggunakan perahu yang dihias indah. Acara ini biasanya diiringi dengan pertunjukan seni tradisional, doa bersama, dan makan bersama seluruh warga kampung.",
-  },
-  {
-    id: 6,
-    category: "Tradisi Laut",
-    icon: Anchor,
-    title: "Teknik Jaring Tradisional",
-    description: "Kearifan lokal dalam membuat dan menggunakan jaring ikan secara berkelanjutan.",
-    image: images.culture.jaringTradisional,
-    fullContent:
-      "Nelayan Kangean memiliki teknik pembuatan jaring yang diwariskan turun-temurun. Jaring dibuat dari serat alami yang dianyam dengan pola khusus untuk menangkap jenis ikan tertentu. Teknik ini tidak hanya efektif tetapi juga ramah lingkungan karena menggunakan lubang jaring yang memungkinkan ikan kecil lolos. Pengetahuan ini menjadi bagian penting dari pariwisata berkelanjutan Kangean.",
-  },
-]
-
-const categories = [
-  { id: "all", name: "Semua", icon: BookOpen },
-  { id: "Cerita Rakyat", name: "Cerita Rakyat", icon: BookOpen },
-  { id: "Sejarah Lokal", name: "Sejarah Lokal", icon: History },
-  { id: "Tradisi Laut", name: "Tradisi Laut", icon: Anchor },
-]
+import { cultureCategories, culturalContent } from "@/config/culture-data"
+import { logoIconMap } from "@/config/logo"
 
 export function CultureCenter() {
   const [selectedCategory, setSelectedCategory] = useState("all")
@@ -146,20 +77,20 @@ export function CultureCenter() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-10 md:mb-12"
         >
-          {categories.map((category) => (
-            <Button
-              key={category.id}
-              variant={selectedCategory === category.id ? "default" : "outline"}
-              onClick={() => setSelectedCategory(category.id)}
-              size="sm"
-              className={`gap-1.5 sm:gap-2 rounded-full px-3 sm:px-5 text-xs sm:text-sm transition-all duration-300 ${
-                selectedCategory === category.id ? "shadow-lg shadow-primary/25" : "hover:border-primary/50"
-              }`}
-            >
-              <category.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              <span className="hidden xs:inline">{category.name}</span>
-            </Button>
-          ))}
+          {cultureCategories.map((category) => {
+            const Icon = logoIconMap[category.icon as keyof typeof logoIconMap]
+            return (
+              <Button
+                key={category.id}
+                variant={selectedCategory === category.id ? "default" : "outline"}
+                onClick={() => setSelectedCategory(category.id)}
+                className="gap-1.5 sm:gap-2 transition-all duration-300 text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2.5"
+              >
+                {Icon && <Icon className="w-4 h-4" />}
+                {category.name}
+              </Button>
+            )
+          })}
         </motion.div>
 
         {/* Content Grid */}
@@ -188,8 +119,11 @@ export function CultureCenter() {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                       <div className="absolute top-3 left-3 sm:top-4 sm:left-4">
-                        <Badge className="bg-card/90 text-card-foreground backdrop-blur-sm text-xs">
-                          <item.icon className="w-3 h-3 mr-1" />
+                        <Badge className="bg-card/90 text-card-foreground backdrop-blur-sm text-xs gap-1">
+                          {(() => {
+                            const Icon = logoIconMap[item.icon as keyof typeof logoIconMap]
+                            return Icon ? <Icon className="w-3 h-3" /> : null
+                          })()}
                           {item.category}
                         </Badge>
                       </div>

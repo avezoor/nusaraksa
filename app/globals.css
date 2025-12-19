@@ -208,3 +208,56 @@ html {
 .stagger-5 {
   animation-delay: 0.5s;
 }
+/* KaTeX and Math Rendering Styles */
+.math-inline,
+.math-block {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.math-block {
+  display: block;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.75rem 0;
+}
+
+.math-inline {
+  display: inline;
+  margin: 0 0.25rem;
+}
+
+/* KaTeX override for dark mode */
+.dark .katex {
+  color: hsl(var(--foreground) / 1);
+}
+
+.dark .katex-display {
+  color: hsl(var(--foreground) / 1);
+}
+
+/* Markdown Content Wrapper for Proper Margins */
+.prose {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-width: none;
+}
+
+/* Responsive prose adjustments */
+@media (max-width: 640px) {
+  .prose {
+    font-size: 0.875rem;
+  }
+}
+
+/* Ensure code blocks respect margins */
+.prose pre {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.prose code {
+  word-break: break-word;
+}

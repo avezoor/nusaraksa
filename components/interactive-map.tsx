@@ -2,82 +2,24 @@
 
 import { useState, useRef } from "react"
 import Image from "next/image"
-import { MapPin, Waves, TreePalm, Anchor, Camera, ExternalLink } from "lucide-react"
+import { ExternalLink, MapPin } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { motion, useInView, AnimatePresence } from "framer-motion"
-import { images } from "@/config/images"
+import { mapCategories, mapLocations, googleMapsEmbed } from "@/config/map-data"
+import { logoIconMap } from "@/config/logo"
 
-const mapLocations = [
-  {
-    id: 1,
-    name: "Pantai Tanjung Kiras",
-    category: "Pantai & Bahari",
-    icon: Waves,
-    position: { top: "30%", left: "25%" },
-    image: images.map.pantaiTanjungKiras,
-    description: "Pantai dengan pasir putih dan air jernih kebiruan. Cocok untuk snorkeling dan menikmati sunset.",
-    history:
-      "Pantai ini dahulu merupakan tempat pendaratan nelayan dan hingga kini masih menjadi lokasi ritual laut tahunan.",
-    etiquette: "Jaga kebersihan, hormati area ritual, dan hindari mengambil terumbu karang.",
+// Create categoryColors from mapCategories
+const categoryColors = mapCategories.reduce(
+  (acc, cat) => {
+    acc[cat.id] = cat.color
+    return acc
   },
-  {
-    id: 2,
-    name: "Kampung Adat Palasa",
-    category: "Kampung Budaya",
-    icon: TreePalm,
-    position: { top: "45%", left: "55%" },
-    image: images.map.kampungPalasa,
-    description: "Kampung tradisional dengan rumah-rumah panggung khas Kangean dan tradisi yang masih terjaga.",
-    history:
-      "Kampung tertua di Kangean yang didirikan pada abad ke-16. Masyarakatnya masih menjalankan adat istiadat leluhur.",
-    etiquette: "Mohon izin sebelum mengambil foto, berpakaian sopan, dan ikuti petunjuk pemandu lokal.",
-  },
-  {
-    id: 3,
-    name: "Bukit Cinta",
-    category: "Spot Alam",
-    icon: Camera,
-    position: { top: "20%", left: "70%" },
-    image: images.map.bukitCinta,
-    description: "Puncak bukit dengan pemandangan spektakuler ke seluruh Kepulauan Kangean dan lautan lepas.",
-    history: "Menurut legenda, bukit ini adalah tempat pertemuan sepasang kekasih yang terpisah oleh lautan.",
-    etiquette: "Bawa perlengkapan mendaki yang memadai dan jangan membuang sampah sembarangan.",
-  },
-  {
-    id: 4,
-    name: "Pelabuhan Tradisional",
-    category: "Spot Sejarah",
-    icon: Anchor,
-    position: { top: "60%", left: "35%" },
-    image: images.map.pelabuhanTradisional,
-    description:
-      "Pelabuhan nelayan tradisional dengan perahu-perahu warna-warni dan suasana kehidupan pesisir autentik.",
-    history: "Pelabuhan ini telah beroperasi sejak zaman kolonial dan menjadi jalur perdagangan penting di kawasan.",
-    etiquette: "Hati-hati di area dermaga, hormati aktivitas nelayan, dan jangan menghalangi jalan perahu.",
-  },
-  {
-    id: 5,
-    name: "Goa Laut Kangean",
-    category: "Spot Alam",
-    icon: Camera,
-    position: { top: "75%", left: "60%" },
-    image: images.map.goaLaut,
-    description: "Goa alami di tebing laut dengan stalaktit dan stalagmit yang memukau serta air laut yang jernih.",
-    history: "Goa ini dipercaya sebagai tempat pertapaan tokoh spiritual Kangean pada masa lampau.",
-    etiquette: "Gunakan pemandu lokal, bawa alat penerangan, dan jangan menyentuh formasi batuan.",
-  },
-]
-
-const categoryColors: Record<string, string> = {
-  "Pantai & Bahari": "bg-chart-1",
-  "Kampung Budaya": "bg-chart-2",
-  "Spot Alam": "bg-chart-3",
-  "Spot Sejarah": "bg-chart-4",
-}
+  {} as Record<string, string>,
+)
 
 export function InteractiveMap() {
   const [selectedLocation, setSelectedLocation] = useState<(typeof mapLocations)[0] | null>(null)
@@ -108,80 +50,28 @@ export function InteractiveMap() {
           </p>
         </motion.div>
 
-        {/* Interactive Map Container */}
+        {/* Google Maps Embed Section */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={isInView ? { opacity: 1, scale: 1 } : {}}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="max-w-5xl mx-auto"
+          className="max-w-5xl mx-auto mb-12 sm:mb-16 md:mb-20"
         >
-          <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-border bg-card shadow-xl sm:shadow-2xl shadow-primary/5">
-            <div className="relative aspect-[4/3] sm:aspect-[16/10]">
-              <Image
-                src={images.map.background || "/placeholder.svg"}
-                alt="Peta Pulau Kangean"
-                fill
-                className="object-cover"
+          <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-border shadow-xl sm:shadow-2xl shadow-primary/5">
+            <div className="aspect-video w-full">
+              <iframe
+                src={googleMapsEmbed.embedUrl}
+                width="100%"
+                height="100%"
+                style={{ border: "none" }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title={googleMapsEmbed.title}
+                className="w-full h-full"
               />
-
-              {/* Location Markers */}
-              {mapLocations.map((location, index) => (
-                <motion.button
-                  key={location.id}
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={isInView ? { scale: 1, opacity: 1 } : {}}
-                  transition={{ delay: 0.5 + index * 0.1, type: "spring", stiffness: 200 }}
-                  className="absolute transform -translate-x-1/2 -translate-y-1/2 z-10"
-                  style={{ top: location.position.top, left: location.position.left }}
-                  onClick={() => setSelectedLocation(location)}
-                  onMouseEnter={() => setHoveredLocation(location.id)}
-                  onMouseLeave={() => setHoveredLocation(null)}
-                >
-                  <motion.div
-                    animate={{
-                      scale: hoveredLocation === location.id ? 1.2 : 1,
-                      y: hoveredLocation === location.id ? -5 : 0,
-                    }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                    className={`relative flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-xl sm:rounded-2xl ${categoryColors[location.category]} text-primary-foreground shadow-lg cursor-pointer`}
-                  >
-                    <location.icon className="w-4 h-4 sm:w-5 sm:h-5" />
-                    <span className="absolute inset-0 rounded-xl sm:rounded-2xl animate-ping opacity-25 bg-inherit" />
-                  </motion.div>
-
-                  {/* Hover Tooltip - Hidden on touch devices */}
-                  <AnimatePresence>
-                    {hoveredLocation === location.id && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 10 }}
-                        className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 sm:mb-3 px-3 sm:px-4 py-1.5 sm:py-2 bg-foreground text-background text-xs sm:text-sm rounded-lg sm:rounded-xl whitespace-nowrap shadow-xl hidden sm:block"
-                      >
-                        {location.name}
-                        <span className="absolute top-full left-1/2 -translate-x-1/2 border-6 sm:border-8 border-transparent border-t-foreground" />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.button>
-              ))}
             </div>
           </div>
-
-          {/* Legend - Better responsive layout */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            className="flex flex-wrap justify-center gap-3 sm:gap-4 md:gap-6 mt-6 sm:mt-8"
-          >
-            {Object.entries(categoryColors).map(([category, color]) => (
-              <div key={category} className="flex items-center gap-1.5 sm:gap-2">
-                <div className={`w-3 h-3 sm:w-4 sm:h-4 rounded-md sm:rounded-lg ${color}`} />
-                <span className="text-xs sm:text-sm text-muted-foreground font-light">{category}</span>
-              </div>
-            ))}
-          </motion.div>
         </motion.div>
 
         {/* Location Cards Grid - Better responsive grid */}
@@ -208,7 +98,10 @@ export function InteractiveMap() {
                       whileHover={{ rotate: 10, scale: 1.1 }}
                       className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl ${categoryColors[location.category]} text-primary-foreground flex items-center justify-center flex-shrink-0`}
                     >
-                      <location.icon className="w-4 h-4 sm:w-5 sm:h-5" />
+                      {(() => {
+                        const Icon = logoIconMap[location.icon as keyof typeof logoIconMap]
+                        return Icon ? <Icon className="w-4 h-4 sm:w-5 sm:h-5" /> : null
+                      })()}
                     </motion.div>
                     <div className="min-w-0">
                       <CardTitle className="text-sm sm:text-base font-medium text-foreground group-hover:text-primary transition-colors truncate">
@@ -253,7 +146,10 @@ export function InteractiveMap() {
                         <div
                           className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl ${categoryColors[selectedLocation.category]} text-primary-foreground flex items-center justify-center`}
                         >
-                          <selectedLocation.icon className="w-4 h-4 sm:w-5 sm:h-5" />
+                          {(() => {
+                            const Icon = logoIconMap[selectedLocation.icon as keyof typeof logoIconMap]
+                            return Icon ? <Icon className="w-4 h-4 sm:w-5 sm:h-5" /> : null
+                          })()}
                         </div>
                         <Badge variant="outline" className="font-light text-xs">
                           {selectedLocation.category}

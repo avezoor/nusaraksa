@@ -2,6 +2,7 @@
 id: "6"
 slug: bahasa-kangean-pemula
 title: Belajar Bahasa Kangean untuk Pemula
+description: Panduan dasar berbahasa Kangean untuk wisatawan yang ingin berinteraksi dengan masyarakat lokal.
 excerpt: Panduan dasar berbahasa Kangean untuk wisatawan yang ingin berinteraksi dengan masyarakat lokal.
 author: Hj. Aminah
 authorImage: hjAminah

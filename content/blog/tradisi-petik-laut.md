@@ -2,6 +2,7 @@
 id: "2"
 slug: tradisi-petik-laut
 title: "Tradisi Petik Laut: Ungkapan Syukur Nelayan Kangean"
+description: Mengenal lebih dekat ritual tahunan masyarakat pesisir Kangean sebagai bentuk penghormatan kepada laut.
 excerpt: Mengenal lebih dekat ritual tahunan masyarakat pesisir Kangean sebagai bentuk penghormatan kepada laut.
 author: Siti Nurhaliza
 authorImage: sitiNurhaliza

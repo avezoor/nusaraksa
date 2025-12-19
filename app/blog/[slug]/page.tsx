@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation"
-import { blogPosts } from "@/config/blog-data"
+import { getBlogPostBySlug, getAllBlogPosts } from "@/lib/blog-server"
 import { BlogDetail } from "@/components/blog/blog-detail"
 import { BlogHeader } from "@/components/blog/blog-header"
 import { Footer } from "@/components/footer"
@@ -9,14 +9,15 @@ interface BlogPostPageProps {
 }
 
 export async function generateStaticParams() {
-  return blogPosts.map((post) => ({
+  const posts = await getAllBlogPosts()
+  return posts.map((post) => ({
     slug: post.slug,
   }))
 }
 
 export async function generateMetadata({ params }: BlogPostPageProps) {
   const { slug } = await params
-  const post = blogPosts.find((p) => p.slug === slug)
+  const post = await getBlogPostBySlug(slug)
 
   if (!post) {
     return { title: "Artikel tidak ditemukan" }
@@ -30,7 +31,7 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params
-  const post = blogPosts.find((p) => p.slug === slug)
+  const post = await getBlogPostBySlug(slug)
 
   if (!post) {
     notFound()

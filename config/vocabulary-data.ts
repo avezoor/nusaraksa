@@ -8,7 +8,7 @@ export interface VocabularyWord {
 export interface VocabularyCategory {
   id: string
   name: string
-  icon: string
+  icon: string 
   words: VocabularyWord[]
 }
 
@@ -16,7 +16,7 @@ export const vocabularyCategories: VocabularyCategory[] = [
   {
     id: "salam",
     name: "Salam & Sapaan",
-    icon: "👋",
+    icon: "Hand",
     words: [
       { id: "s1", kangean: "Arapa kabar?", indonesian: "Apa kabar?", example: "Arapa kabar, Mak?" },
       { id: "s2", kangean: "Salamat agi", indonesian: "Selamat pagi", example: "Salamat agi, Pak Guru" },
@@ -35,7 +35,7 @@ export const vocabularyCategories: VocabularyCategory[] = [
   {
     id: "keluarga",
     name: "Anggota Keluarga",
-    icon: "👨‍👩‍👧‍👦",
+    icon: "Users",
     words: [
       { id: "k1", kangean: "Empa'", indonesian: "Ayah", example: "Empa' ngakan la' sawah" },
       { id: "k2", kangean: "Ebhu", indonesian: "Ibu", example: "Ebhu masak nase'" },
@@ -54,7 +54,7 @@ export const vocabularyCategories: VocabularyCategory[] = [
   {
     id: "aktivitas",
     name: "Aktivitas Sehari-hari",
-    icon: "🏃",
+    icon: "Activity",
     words: [
       { id: "a1", kangean: "Ngakan", indonesian: "Makan", example: "Bâri' ngakan dhisit" },
       { id: "a2", kangean: "Ngenum", indonesian: "Minum", example: "Ngenum aéng sager" },
@@ -75,7 +75,7 @@ export const vocabularyCategories: VocabularyCategory[] = [
   {
     id: "alam",
     name: "Alam & Laut",
-    icon: "🌊",
+    icon: "Waves",
     words: [
       { id: "l1", kangean: "Tassé'", indonesian: "Laut", example: "Tassé' tenggi ari néka" },
       { id: "l2", kangean: "Pèrao", indonesian: "Perahu", example: "Pèrao jhukong la' pelabuan" },
