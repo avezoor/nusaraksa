@@ -1,12 +1,11 @@
 "use client"
 
-import { useRef } from "react"
+import { useRef, useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { MapPin, Phone, Mail, Facebook, Instagram, Youtube, Twitter, ArrowRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { MapPin, Phone, Mail, Facebook, Instagram, Youtube, Twitter } from "lucide-react"
 import { motion, useInView } from "framer-motion"
+import { getRandomQuote, quotes } from "@/config/quotes"
 
 const footerLinks = {
   fitur: [
@@ -40,35 +39,44 @@ const socialLinks = [
 export function Footer() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
+  const [quote, setQuote] = useState(quotes[0]) // Start dengan quote pertama (deterministic)
+  const [mounted, setMounted] = useState(false)
+
+  // Set random quote setelah client mount (cegah hydration mismatch)
+  useEffect(() => {
+    setMounted(true)
+    setQuote(getRandomQuote())
+
+    const interval = setInterval(() => {
+      setQuote(getRandomQuote())
+    }, 5000) // Ganti quote setiap 5 detik
+
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <footer className="bg-foreground text-background" ref={ref}>
-      {/* Newsletter Section */}
+      {/* Quote Section */}
       <div className="border-b border-background/10">
         <div className="container mx-auto px-4 py-10 sm:py-12 md:py-16">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
-            className="max-w-2xl mx-auto text-center"
+            className="max-w-3xl mx-auto text-center"
           >
-            <h3 className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl font-normal mb-3 sm:mb-4 px-2">
-              Tetap Terhubung dengan NusaRaksa
-            </h3>
-            <p className="text-background/60 mb-6 sm:mb-8 font-light text-sm sm:text-base px-2">
-              Dapatkan informasi terbaru tentang budaya, wisata, dan kegiatan di Pulau Kangean.
-            </p>
-            <form className="flex flex-col sm:flex-row gap-2 sm:gap-3 max-w-md mx-auto px-2">
-              <Input
-                type="email"
-                placeholder="Alamat email Anda"
-                className="bg-background/10 border-background/20 text-background placeholder:text-background/40 flex-1 rounded-full px-4 sm:px-5 py-5 sm:py-6 text-sm"
-              />
-              <Button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-5 sm:px-6 py-5 sm:py-6 group text-sm">
-                Berlangganan
-                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </form>
+            <motion.div
+              key={quote.text}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <p className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl font-normal mb-4 px-2 text-balance">
+                "{quote.text}"
+              </p>
+              <p className="text-background/60 font-light text-sm sm:text-base">— {quote.author}</p>
+            </motion.div>
           </motion.div>
         </div>
       </div>
