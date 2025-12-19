@@ -1,5 +1,5 @@
 import { Suspense } from "react"
-import { BlogList } from "@/components/blog/blog-list"
+import { BlogListClient } from "@/components/blog/blog-list-client"
 import { BlogHeader } from "@/components/blog/blog-header"
 import { Footer } from "@/components/footer"
 
@@ -13,7 +13,7 @@ export default function BlogPage() {
     <main className="min-h-screen bg-background">
       <BlogHeader />
       <Suspense fallback={<div className="py-20 text-center">Memuat artikel...</div>}>
-        <BlogList />
+        <BlogListClient />
       </Suspense>
       <Footer />
     </main>
